@@ -47,6 +47,8 @@ func NewExporter(configFile string) (Exporter, error) {
 		}
 	}
 
+	fmt.Println(c.Target.DSN)
+	
 	var targets []Target
 	if c.Target != nil {
 		target, err := NewTarget("", "", string(c.Target.DSN), c.Target.Collectors(), nil, c.Globals)

@@ -50,7 +50,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	log.Info("xd")
 	log.Infof("Starting SQL exporter %s %s", version.Info(), version.BuildContext())
 
 	exporter, err := sql_exporter.NewExporter(*configFile)
