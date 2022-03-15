@@ -1,4 +1,4 @@
-# Prometheus SQL Exporter [![Build Status](https://travis-ci.org/free/sql_exporter.svg)](https://travis-ci.org/free/sql_exporter) [![Go Report Card](https://goreportcard.com/badge/github.com/free/sql_exporter)](https://goreportcard.com/report/github.com/free/sql_exporter) [![GoDoc](https://godoc.org/github.com/free/sql_exporter?status.svg)](https://godoc.org/github.com/free/sql_exporter) [![Docker Pulls](https://img.shields.io/docker/pulls/githubfree/sql_exporter.svg?maxAge=604800)](https://hub.docker.com/r/githubfree/sql_exporter)
+# Prometheus SQL Exporter [![Build Status](https://travis-ci.org/free/sql_exporter.svg)](https://travis-ci.org/free/sql_exporter) [![Go Report Card](https://goreportcard.com/badge/github.com/cuckflong-crypto/sql_exporter)](https://goreportcard.com/report/github.com/cuckflong-crypto/sql_exporter) [![GoDoc](https://godoc.org/github.com/cuckflong-crypto/sql_exporter?status.svg)](https://godoc.org/github.com/cuckflong-crypto/sql_exporter) [![Docker Pulls](https://img.shields.io/docker/pulls/githubfree/sql_exporter.svg?maxAge=604800)](https://hub.docker.com/r/githubfree/sql_exporter)
 
 Database agnostic SQL exporter for [Prometheus](https://prometheus.io).
 
@@ -9,9 +9,9 @@ monitoring system. Out of the box, it provides support for MySQL, PostgreSQL, Mi
 any DBMS for which a Go driver is available may be monitored after rebuilding the binary with the DBMS driver included.
 
 The collected metrics and the queries that produce them are entirely configuration defined. SQL queries are grouped into
-collectors -- logical groups of queries, e.g. *query stats* or *I/O stats*, mapped to the metrics they populate.
-Collectors may be DBMS-specific (e.g. *MySQL InnoDB stats*) or custom, deployment specific (e.g. *pricing data
-freshness*). This means you can quickly and easily set up custom collectors to measure data quality, whatever that might
+collectors -- logical groups of queries, e.g. _query stats_ or _I/O stats_, mapped to the metrics they populate.
+Collectors may be DBMS-specific (e.g. _MySQL InnoDB stats_) or custom, deployment specific (e.g. _pricing data
+freshness_). This means you can quickly and easily set up custom collectors to measure data quality, whatever that might
 mean in your specific case.
 
 Per the Prometheus philosophy, scrapes are synchronous (metrics are collected on every `/metrics` poll) but, in order to
@@ -20,11 +20,11 @@ metrics when queried more frequently than the configured interval.
 
 ## Usage
 
-Get Prometheus SQL Exporter, either as a [packaged release](https://github.com/free/sql_exporter/releases/latest), as a [Docker image](https://hub.docker.com/r/githubfree/sql_exporter) or
+Get Prometheus SQL Exporter, either as a [packaged release](https://github.com/cuckflong-crypto/sql_exporter/releases/latest), as a [Docker image](https://hub.docker.com/r/githubfree/sql_exporter) or
 build it yourself:
 
 ```
-$ go install github.com/free/sql_exporter/cmd/sql_exporter
+$ go install github.com/cuckflong-crypto/sql_exporter/cmd/sql_exporter
 ```
 
 then run it from the command line:
@@ -56,10 +56,10 @@ Prometheus to record `up=0` for that scrape. Only metrics defined by collectors 
 SQL Exporter process metrics are exported at `/sql_exporter_metrics`.
 
 The configuration examples listed here only cover the core elements. For a comprehensive and comprehensively documented
-configuration file check out 
-[`documentation/sql_exporter.yml`](https://github.com/free/sql_exporter/tree/master/documentation/sql_exporter.yml).
+configuration file check out
+[`documentation/sql_exporter.yml`](https://github.com/cuckflong-crypto/sql_exporter/tree/master/documentation/sql_exporter.yml).
 You will find ready to use "standard" DBMS-specific collector definitions in the
-[`examples`](https://github.com/free/sql_exporter/tree/master/examples) directory. You may contribute your own collector
+[`examples`](https://github.com/cuckflong-crypto/sql_exporter/tree/master/examples) directory. You may contribute your own collector
 definitions and metric additions if you think they could be more widely useful, even if they are merely different takes
 on already covered DBMSs.
 
@@ -83,13 +83,13 @@ global:
 target:
   # Data source name always has a URI schema that matches the driver name. In some cases (e.g. MySQL)
   # the schema gets dropped or replaced to match the driver expected DSN format.
-  data_source_name: 'sqlserver://prom_user:prom_password@dbserver1.example.com:1433'
+  data_source_name: "sqlserver://prom_user:prom_password@dbserver1.example.com:1433"
 
   # Collectors (referenced by name) to execute on the target.
   collectors: [pricing_data_freshness]
 
 # Collector definition files.
-collector_files: 
+collector_files:
   - "*.collector.yml"
 ```
 
@@ -110,7 +110,7 @@ collector_name: pricing_data_freshness
 metrics:
   - metric_name: pricing_update_time
     type: gauge
-    help: 'Time when prices for a market were last updated.'
+    help: "Time when prices for a market were last updated."
     key_labels:
       # Populated from the `market` column of each row.
       - Market
@@ -136,12 +136,12 @@ Unfortunately, while this works out of the box with the [MS SQL Server](https://
 a schema and the [Clickhouse](github.com/kshvakov/clickhouse) one uses `tcp://`. So SQL Exporter does a bit of massaging
 of DSNs for the latter two drivers in order for this to work:
 
-DB | SQL Exporter expected DSN | Driver sees
-:---|:---|:---
-MySQL | `mysql://user:passw@protocol(host:port)/dbname` | `user:passw@protocol(host:port)/dbname`
-PostgreSQL | `postgres://user:passw@host:port/dbname` | *unchanged*
-SQL Server | `sqlserver://user:passw@host:port/instance` | *unchanged*
-Clickhouse | `clickhouse://host:port?username=user&password=passw&database=dbname` | `tcp://host:port?username=user&password=passw&database=dbname`
+| DB         | SQL Exporter expected DSN                                             | Driver sees                                                    |
+| :--------- | :-------------------------------------------------------------------- | :------------------------------------------------------------- |
+| MySQL      | `mysql://user:passw@protocol(host:port)/dbname`                       | `user:passw@protocol(host:port)/dbname`                        |
+| PostgreSQL | `postgres://user:passw@host:port/dbname`                              | _unchanged_                                                    |
+| SQL Server | `sqlserver://user:passw@host:port/instance`                           | _unchanged_                                                    |
+| Clickhouse | `clickhouse://host:port?username=user&password=passw&database=dbname` | `tcp://host:port?username=user&password=passw&database=dbname` |
 
 ## Why It Exists
 

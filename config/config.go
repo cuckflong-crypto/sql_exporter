@@ -26,6 +26,12 @@ func Load(configFile string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(c.Target.DSN)
+	fmt.Println(c.Target.SecretId)
+	// svc := secretsmanager.New(session.New())
+	// input := &secretsmanager.GetSecretValueInput{
+	// 	SecretId: aws.String("MyTestDatabaseSecret"),
+	// }
 
 	return &c, nil
 }
@@ -177,6 +183,7 @@ func (g *GlobalConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
 // TargetConfig defines a DSN and a set of collectors to be executed on it.
 type TargetConfig struct {
 	DSN           Secret   `yaml:"data_source_name"` // data source name to connect to
+	SecretId 			Secret	 `yaml:"secret_id"`
 	CollectorRefs []string `yaml:"collectors"`       // names of collectors to execute on the target
 
 	collectors []*CollectorConfig // resolved collector references
@@ -201,6 +208,9 @@ func (t *TargetConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	if t.DSN == "" {
 		return fmt.Errorf("missing data_source_name for target %+v", t)
 	}
+	fmt.Println("Assadsa")
+	fmt.Println(t.SecretId)
+	log.Info("addsadas")
 	checkCollectorRefs(t.CollectorRefs, "target")
 
 	return checkOverflow(t.XXX, "target")

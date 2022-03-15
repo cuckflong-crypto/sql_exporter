@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/free/sql_exporter/config"
+	"github.com/cuckflong-crypto/sql_exporter/config"
 	"github.com/golang/protobuf/proto"
 	"github.com/prometheus/client_golang/prometheus"
 	dto "github.com/prometheus/client_model/go"
@@ -47,8 +47,6 @@ func NewExporter(configFile string) (Exporter, error) {
 		}
 	}
 
-	fmt.Println(c.Target.DSN)
-	
 	var targets []Target
 	if c.Target != nil {
 		target, err := NewTarget("", "", string(c.Target.DSN), c.Target.Collectors(), nil, c.Globals)
