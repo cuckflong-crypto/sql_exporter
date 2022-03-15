@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/cuckflong-crypto/sql_exporter"
+	"cuckflong-crypto/sql_exporter"
 )
 
 const (

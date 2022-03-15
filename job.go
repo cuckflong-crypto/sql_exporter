@@ -3,8 +3,9 @@ package sql_exporter
 import (
 	"fmt"
 
-	"github.com/cuckflong-crypto/sql_exporter/config"
-	"github.com/cuckflong-crypto/sql_exporter/errors"
+	"cuckflong-crypto/sql_exporter/config"
+	"cuckflong-crypto/sql_exporter/errors"
+
 	"github.com/prometheus/client_golang/prometheus"
 )
 

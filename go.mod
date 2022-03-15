@@ -5,7 +5,6 @@ go 1.17
 require (
 	github.com/ClickHouse/clickhouse-go v1.5.4
 	github.com/aws/aws-sdk-go v1.43.18
-	github.com/cuckflong-crypto/sql_exporter v0.0.0-20220315033805-99d9e81b9fa1
 	github.com/denisenkom/go-mssqldb v0.12.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang/glog v1.0.0
@@ -21,7 +20,6 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/cloudflare/golz4 v0.0.0-20150217214814-ef862a3cdc58 // indirect
-	github.com/free/sql_exporter v0.0.0-20191127220300-6f96b0d6b403 // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
 	github.com/golang-sql/sqlexp v0.0.0-20170517235910-f1bb20e5a188 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect

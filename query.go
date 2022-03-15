@@ -5,8 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/cuckflong-crypto/sql_exporter/config"
-	"github.com/cuckflong-crypto/sql_exporter/errors"
+	"cuckflong-crypto/sql_exporter/config"
+	"cuckflong-crypto/sql_exporter/errors"
+
 	log "github.com/golang/glog"
 )
 

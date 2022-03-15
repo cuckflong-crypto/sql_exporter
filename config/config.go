@@ -7,6 +7,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/secretsmanager"
 	log "github.com/golang/glog"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/model"
@@ -26,12 +30,36 @@ func Load(configFile string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(c.Target.DSN)
-	fmt.Println(c.Target.SecretId)
-	// svc := secretsmanager.New(session.New())
-	// input := &secretsmanager.GetSecretValueInput{
-	// 	SecretId: aws.String("MyTestDatabaseSecret"),
-	// }
+	svc := secretsmanager.New(session.New())
+	input := &secretsmanager.GetSecretValueInput{
+		SecretId: aws.String(string(c.Target.SecretId)),
+	}
+	result, err := svc.GetSecretValue(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case secretsmanager.ErrCodeResourceNotFoundException:
+				fmt.Println(secretsmanager.ErrCodeResourceNotFoundException, aerr.Error())
+			case secretsmanager.ErrCodeInvalidParameterException:
+				fmt.Println(secretsmanager.ErrCodeInvalidParameterException, aerr.Error())
+			case secretsmanager.ErrCodeInvalidRequestException:
+				fmt.Println(secretsmanager.ErrCodeInvalidRequestException, aerr.Error())
+			case secretsmanager.ErrCodeDecryptionFailure:
+				fmt.Println(secretsmanager.ErrCodeDecryptionFailure, aerr.Error())
+			case secretsmanager.ErrCodeInternalServiceError:
+				fmt.Println(secretsmanager.ErrCodeInternalServiceError, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		c.Target.DSN = Secret(strings.Replace(string(c.Target.DSN), "{DB_PWD}", result.String(), 1))
+		fmt.Println(c.Target.DSN)
+		fmt.Println(c.Target.SecretId)
+	}
 
 	return &c, nil
 }
@@ -208,9 +236,6 @@ func (t *TargetConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	if t.DSN == "" {
 		return fmt.Errorf("missing data_source_name for target %+v", t)
 	}
-	fmt.Println("Assadsa")
-	fmt.Println(t.SecretId)
-	log.Info("addsadas")
 	checkCollectorRefs(t.CollectorRefs, "target")
 
 	return checkOverflow(t.XXX, "target")

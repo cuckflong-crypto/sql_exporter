@@ -7,8 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cuckflong-crypto/sql_exporter/config"
-	"github.com/cuckflong-crypto/sql_exporter/errors"
+	"cuckflong-crypto/sql_exporter/config"
+
+	"cuckflong-crypto/sql_exporter/errors"
+
 	log "github.com/golang/glog"
 	dto "github.com/prometheus/client_model/go"
 )

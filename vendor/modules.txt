@@ -60,11 +60,6 @@ github.com/cespare/xxhash/v2
 # github.com/cloudflare/golz4 v0.0.0-20150217214814-ef862a3cdc58
 ## explicit
 github.com/cloudflare/golz4
-# github.com/cuckflong-crypto/sql_exporter v0.0.0-20220315033805-99d9e81b9fa1
-## explicit
-github.com/cuckflong-crypto/sql_exporter
-github.com/cuckflong-crypto/sql_exporter/config
-github.com/cuckflong-crypto/sql_exporter/errors
 # github.com/denisenkom/go-mssqldb v0.12.0
 ## explicit; go 1.11
 github.com/denisenkom/go-mssqldb
@@ -72,10 +67,6 @@ github.com/denisenkom/go-mssqldb/internal/cp
 github.com/denisenkom/go-mssqldb/internal/decimal
 github.com/denisenkom/go-mssqldb/internal/querytext
 github.com/denisenkom/go-mssqldb/msdsn
-# github.com/free/sql_exporter v0.0.0-20191127220300-6f96b0d6b403
-## explicit
-github.com/free/sql_exporter/config
-github.com/free/sql_exporter/errors
 # github.com/go-sql-driver/mysql v1.6.0
 ## explicit; go 1.10
 github.com/go-sql-driver/mysql
