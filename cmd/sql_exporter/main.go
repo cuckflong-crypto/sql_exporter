@@ -7,12 +7,13 @@ import (
 	"os"
 	"runtime"
 
+	_ "net/http/pprof"
+
 	"github.com/free/sql_exporter"
 	log "github.com/golang/glog"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
-	_ "net/http/pprof"
 )
 
 var (
@@ -49,6 +50,7 @@ func main() {
 		os.Exit(0)
 	}
 
+	log.Info("xd")
 	log.Infof("Starting SQL exporter %s %s", version.Info(), version.BuildContext())
 
 	exporter, err := sql_exporter.NewExporter(*configFile)
